@@ -1,0 +1,80 @@
+﻿{
+  "info": {
+    "name": "游戏后端接口测试",
+    "description": "本地游戏后端模拟服务器接口测试集合\n服务器地址：http://localhost:3000\n测试账号：test / 123456 或 admin / admin123",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1️⃣ 健康检查",
+      "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"状态码200\", () => pm.response.to.have.status(200));", "pm.test(\"返回ok\", () => pm.response.json().status === \"ok\");"], "type": "text/javascript" } }],
+      "request": { "method": "GET", "header": [], "url": { "raw": "http://localhost:3000/api/health", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "health"] } }
+    },
+    {
+      "name": "2️⃣ 登录-正常",
+      "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"登录成功\", () => {", "  const json = pm.response.json();", "  pm.expect(json.code).to.eql(0);", "  pm.expect(json.token).to.not.be.empty;", "  pm.expect(json.player).to.not.be.empty;", "  pm.collectionVariables.set(\"token\", json.token);", "});"], "type": "text/javascript" } }],
+      "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"username\":\"test\",\"password\":\"123456\"}" }, "url": { "raw": "http://localhost:3000/api/login", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "login"] } }
+    },
+    {
+      "name": "3️⃣ 登录-密码错误",
+      "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"返回401\", () => pm.response.to.have.status(401));", "pm.test(\"错误提示\", () => {", "  pm.expect(pm.response.json().error).to.include(\"密码错误\");", "});"], "type": "text/javascript" } }],
+      "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\"username\":\"test\",\"password\":\"wrong\"}" }, "url": { "raw": "http://localhost:3000/api/login", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "login"] } }
+    },
+    {
+      "name": "4️⃣ 登录-参数缺失",
+      "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"返回400\", () => pm.response.to.have.status(400));"], "type": "text/javascript" } }],
+      "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{}" }, "url": { "raw": "http://localhost:3000/api/login", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "login"] } }
+    },
+    {
+      "name": "5️⃣ 查询玩家-存在",
+      "request": { "method": "GET", "header": [], "url": { "raw": "http://localhost:3000/api/player/1001", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "player", "1001"] } }
+    },
+    {
+      "name": "6️⃣ 查询玩家-不存在",
+      "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"返回404\", () => pm.response.to.have.status(404));"], "type": "text/javascript" } }],
+      "request": { "method": "GET", "header": [], "url": { "raw": "http://localhost:3000/api/player/9999", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "player", "9999"] } }
+    },
+    {
+      "name": "7️⃣ 查询背包-未登录",
+      "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"返回401\", () => pm.response.to.have.status(401));"], "type": "text/javascript" } }],
+      "request": { "method": "GET", "header": [], "url": { "raw": "http://localhost:3000/api/inventory", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "inventory"] } }
+    },
+    {
+      "name": "8️⃣ 查询背包-已登录",
+      "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"返回背包数据\", () => {", "  pm.expect(pm.response.json().inventory).to.be.an(\"array\");", "});"], "type": "text/javascript" } }],
+      "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer player_1001" }], "url": { "raw": "http://localhost:3000/api/inventory", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "inventory"] } }
+    },
+    {
+      "name": "9️⃣ 购买道具-成功",
+      "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer player_1001" }], "body": { "mode": "raw", "raw": "{\"itemId\":\"item_001\",\"qty\":2}" }, "url": { "raw": "http://localhost:3000/api/shop/buy", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "shop", "buy"] } }
+    },
+    {
+      "name": "🔟 购买道具-金币不足",
+      "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"返回400\", () => pm.response.to.have.status(400));", "pm.test(\"提示金币不足\", () => {", "  pm.expect(pm.response.json().error).to.include(\"金币不足\");", "});"], "type": "text/javascript" } }],
+      "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer player_1001" }], "body": { "mode": "raw", "raw": "{\"itemId\":\"equip_006\",\"qty\":999}" }, "url": { "raw": "http://localhost:3000/api/shop/buy", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "shop", "buy"] } }
+    },
+    {
+      "name": "1️⃣1️⃣ 开始战斗",
+      "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer player_1001" }], "url": { "raw": "http://localhost:3000/api/battle/start", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "battle", "start"] } }
+    },
+    {
+      "name": "1️⃣2️⃣ 排行榜",
+      "request": { "method": "GET", "header": [], "url": { "raw": "http://localhost:3000/api/leaderboard", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "leaderboard"] } }
+    },
+    {
+      "name": "1️⃣3️⃣ 升级加点",
+      "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer player_1001" }], "body": { "mode": "raw", "raw": "{\"attr\":\"atk\"}" }, "url": { "raw": "http://localhost:3000/api/player/levelup", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "player", "levelup"] } }
+    },
+    {
+      "name": "1️⃣4️⃣ 连接游戏-性能测试(跑Runner用)",
+      "event": [
+        { "listen": "prerequest", "script": { "exec": ["// 登录获取token", "const loginReq = {", "  url: \"http://localhost:3000/api/login\",", "  method: \"POST\",", "  body: { mode: \"raw\", raw: \'{\"username\":\"test\",\"password\":\"123456\"}\' },", "  header: [{ key: \"Content-Type\", value: \"application/json\" }]", "};"], "type": "text/javascript" } }
+      ],
+      "request": { "method": "GET", "header": [], "url": { "raw": "http://localhost:3000/api/health", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api", "health"] } }
+    }
+  ],
+  "variable": [
+    { "key": "token", "value": "" },
+    { "key": "baseUrl", "value": "http://localhost:3000" }
+  ]
+}
