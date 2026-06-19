@@ -26,10 +26,18 @@
 ### 测试概况
 - 测试用例总数：**77条**
 - 覆盖模块：13个
+- 测试类型：功能测试 / 边界测试 / 异常测试 / 兼容性测试
 - 缺陷分级：P0（致命）/ P1（严重）/ P2（一般）
 
+### 工具与技术
+| 类型 | 工具/方法 |
+|------|-----------|
+| 测试设计 | 等价类划分、边界值分析 |
+| AI辅助 | 使用 Codex/ChatGPT 辅助生成用例、优化Bug描述 |
+| 文档管理 | Excel（用例管理）、Git/GitHub（版本管理） |
+
 ### 项目时间
-2026.06 - 至今（持续更新中）
+2026.06 - 至今
 
 ### 链接
 - [test-cases/Flare主界面与功能测试用例.xlsx](https://github.com/Hondaoss/game-testing-portfolio/blob/master/test-cases/Flare%E4%B8%BB%E7%95%8C%E9%9D%A2%E4%B8%8E%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B.xlsx)
