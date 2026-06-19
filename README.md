@@ -26,19 +26,32 @@
 ### 测试概况
 - 测试用例总数：**77条**
 - 覆盖模块：13个
+- Bug报告：4条（持续更新中）
 - 测试类型：功能测试 / 边界测试 / 异常测试 / 兼容性测试
-- 缺陷分级：P0（致命）/ P1（严重）/ P2（一般）
+- 缺陷分级：P0（致命）/ P1（严重）/ P2（一般）/ P3（建议）
 
 ### 工具与技术
 | 类型 | 工具/方法 |
 |------|-----------|
 | 测试设计 | 等价类划分、边界值分析 |
 | AI辅助 | 使用 Codex/ChatGPT 辅助生成用例、优化Bug描述 |
-| 文档管理 | Excel（用例管理）、Git/GitHub（版本管理） |
+| 文档管理 | Excel（用例管理 + Bug跟踪）、Git/GitHub（版本管理） |
+
+### 文件结构
+```
+game-testing-portfolio/
+├── README.md
+├── test-cases/
+│   └── Flare主界面与功能测试用例.xlsx
+├── bug-reports/
+│   └── Flare_Bug报告清单.xlsx
+└── summary/（待补充）
+```
 
 ### 项目时间
 2026.06 - 至今
 
 ### 链接
-- [test-cases/Flare主界面与功能测试用例.xlsx](https://github.com/Hondaoss/game-testing-portfolio/blob/master/test-cases/Flare%E4%B8%BB%E7%95%8C%E9%9D%A2%E4%B8%8E%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B.xlsx)
+- [test-cases](https://github.com/Hondaoss/game-testing-portfolio/blob/master/test-cases/Flare%E4%B8%BB%E7%95%8C%E9%9D%A2%E4%B8%8E%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B.xlsx)
+- [bug-reports](https://github.com/Hondaoss/game-testing-portfolio/blob/master/bug-reports/Flare_Bug%E6%8A%A5%E5%91%8A%E6%B8%85%E5%8D%95.xlsx)
 - [Flare Engine](https://github.com/flareteam/flare-engine) | [Flare Game](https://github.com/flareteam/flare-game)
