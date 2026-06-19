@@ -1,21 +1,38 @@
 # 🎮 游戏测试作品集 — Game Testing Portfolio
 
 ## 一、Flare RPG 客户端功能测试
-Flare（github.com/flareteam/flare-engine）开源动作RPG游戏。
+> 对开源动作RPG游戏Flare（github.com/flareteam/flare-engine）进行系统性测试。
+
+### 覆盖模块
+| 模块 | 用例数 | 说明 |
+|------|--------|------|
+| 主界面 | 3 | 冷启动、按钮响应、分辨率适配 |
+| 角色创建 | 14 | 职业选择、名称输入（正常/空/超长/特殊字符）、创建/取消、死亡不可复活 |
+| ESC菜单 | 2 | 保存并退出、取消返回 |
+| 存档系统 | 6 | 列表展示、载入完整性、删除、多存档 |
+| 游戏内HUD | 4 | HUD展示、加载动画 |
+| 角色移动 | 7 | 鼠标点击、路径寻路、WASD控制、障碍物阻挡 |
+| 战斗系统 | 10 | 基础攻击、技能释放、受击反馈、HP/MP回复 |
+| 装备系统 | 11 | 掉落、穿戴/卸下、属性变化、装备对比、职业限制 |
+| 背包系统 | 11 | 拾取、堆叠、使用消耗品、丢弃、满包边界 |
+| 设置系统 | 3 | 音量、画面、按键设置 |
+| 死亡系统 | 2 | 复活机制、装备物品保留 |
+| 升级系统 | 3 | 经验获取、升级属性变化、属性分配 |
+
+### 测试数据
 - 测试用例：**77条** | 覆盖13个模块 | Bug报告：4条
 - [test-cases](test-cases) | [bug-reports](bug-reports) | [summary](summary)
 
-## 二、游戏后端API接口测试
-本地Node.js游戏后端模拟服务器，Postman进行接口与性能测试。
-- 覆盖接口：7个（登录/玩家/背包/商城/战斗/排行榜/升级）
-- 测试用例：**30条**（Excel文档） | Postman请求：30条
-- 测试场景：正常流程 / 异常参数 / 边界条件 / 鉴权校验
+---
 
-### 接口测试覆盖
+## 二、游戏后端API接口测试
+> 本地Node.js游戏后端模拟服务器，使用Postman进行接口测试与性能测试。
+
+### 接口覆盖
 | 接口 | 用例数 | 覆盖内容 |
 |------|--------|----------|
 | 登录 | 5 | 正确/密码错/用户不存在/缺参/空参 |
-| 玩家信息 | 4 | 存在/不同玩家/不存在ID/非法参数 |
+| 玩家信息 | 4 | 存在/不存在ID/非法参数 |
 | 背包 | 2 | 有token/无token鉴权 |
 | 商城购买 | 7 | 正常买/买多个/金币不足/商品不存在/无token/缺参 |
 | 战斗 | 4 | 正常/无token/体力不足/连续战斗 |
@@ -23,6 +40,9 @@ Flare（github.com/flareteam/flare-engine）开源动作RPG游戏。
 | 升级加点 | 4 | 加攻击/加生命/无效属性/无token |
 | 健康检查 | 1 | 服务器状态 |
 
+### 测试数据
+- 接口：7个 | 测试用例：**30条** | Postman请求：30条
+- 性能测试：Runner循环10次，成功率100%
 - [api-test/server.js](api-test/server.js)
 - [api-test/游戏后端API接口测试用例.xlsx](api-test/游戏后端API接口测试用例.xlsx)
 - [api-test/游戏后端接口测试.postman_collection.json](api-test/游戏后端接口测试.postman_collection.json)
@@ -31,5 +51,3 @@ Flare（github.com/flareteam/flare-engine）开源动作RPG游戏。
 
 **工具：** Postman | Postman Runner | Node.js | Git/GitHub | Codex/ChatGPT
 **项目时间：** 2026.06 - 至今
-
-[Flare Engine](https://github.com/flareteam/flare-engine) | [Flare Game](https://github.com/flareteam/flare-game)
